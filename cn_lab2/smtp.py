@@ -1,27 +1,26 @@
 import smtplib
 from email.mime.text import MIMEText
 
-# Ethereal credentials
-sender_email = "filiberto35@ethereal.email"
-receiver_email = "filiberto35@ethereal.email"  # send to yourself
-password = "GaPCJ6WuUA9t2MZFCq"
+def send_email():
+    sender = "hello@demomailtrap.co"       # Must be a valid email
+    receiver = "saicharan.g07@gmail.com"     # Your Mailtrap inbox
+    username = "api"
+    password = "b13f5c0b6bc3d421a53f6adb799677c1"
 
-try:
-    # Create email message
-    msg = MIMEText("Hello! This is a test email from Python using my new Ethereal account.")
-    msg["Subject"] = "CN Assignment_02 SMTP Email"
-    msg["From"] = sender_email
-    msg["To"] = receiver_email
+    msg = MIMEText("Hello Siddhartha, this is a test email via Mailtrap.")
+    msg["Subject"] = "CN Lab 2 - SMTP Test"
+    msg["From"] = sender
+    msg["To"] = receiver
 
-    # Connect to Ethereal SMTP server
-    server = smtplib.SMTP("smtp.ethereal.email", 587)
-    server.starttls()
-    server.login(sender_email, password)
+    try:
+        s = smtplib.SMTP("live.smtp.mailtrap.io", 587)
+        s.starttls()
+        s.login(username, password)
+        s.sendmail(sender, receiver, msg.as_string())
+        s.quit()
+        print("Email sent successfully. Check your Mailtrap inbox!")
+    except Exception as e:
+        print("Error:", e)
 
-    # Send email
-    server.sendmail(sender_email, receiver_email, msg.as_string())
-    print("✅ Email sent successfully! Check Ethereal inbox.")
+send_email()
 
-    server.quit()
-except Exception as e:
-    print("❌ Error:", e)
